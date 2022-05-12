@@ -1,0 +1,54 @@
+﻿@model SistemaCaminhoesMVC.Models.ViewModels.VehicleFormViewModels
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h4>Seller</h4>
+<hr />
+<div class="row">
+  
+    <div class="col-md-4">
+        <form asp-action="Edit" class="form-horizontal">
+            <input type="hidden" asp-for="Vehicle.Id" />
+            <fieldset>
+                @Html.ValidationMessage("CustomError",new { @class = "text-danger" })
+                <div class="form-group">
+                    <label asp-for="Vehicle.Chassi" class="control-label"></label>
+                    <input asp-for="Vehicle.Chassi" class="form-control" />
+                    <span asp-validation-for="Vehicle.Chassi" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Vehicle.Model"></label>
+                    <select class="form-control" asp-for="Vehicle.ModelId">
+                       <option selected disabled >Select</option>    
+                           @foreach (var title in Model.Models)
+                           {
+                             <option value="@title.Id" >@title.Name</option>
+                           }
+                    </select>
+                </div>
+                <div class="form-group" >
+                    <label asp-for="Vehicle.ModelYear"></label>
+                    <select asp-for="Vehicle.ModelYear" class="form-control" asp-items="@(ViewBag.yearsList as SelectList)"></select>
+                    <span asp-validation-for="Vehicle.ModelYear" class="text-danger"></span>                    
+                </div>
+                <div class="form-group">
+                    <label asp-for="Vehicle.YearManufacture"></label>
+                    <input asp-for="Vehicle.YearManufacture" readonly class="form-control" value="@DateTime.Now.Year" />
+                    <span asp-validation-for="Vehicle.YearManufacture" class="text-danger"></span>
+                </div>
+                 <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <input type="submit" value="Edit" class="btn btn-primary" />
+                        <a asp-action="Index" class="btn btn-default" >Back to list</a>                    
+                    </div>                    
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+
+
